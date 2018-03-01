@@ -1,0 +1,270 @@
+@mixin fontFace($font-name, $directory , $fontWeight: normal, $fontStyle: normal) {
+  @font-face {
+    font-family: "#{$font-name}";
+    src: url("#{$urlFont}/#{$directory}/#{$font-name}.woff") format("woff"),
+    url("#{$urlFont}/#{$directory}/#{$font-name}.woff2") format("woff2"),
+    url("#{$urlFont}/#{$directory}/#{$font-name}.ttf") format("truetype");
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+}
+
+
+// mixin @media => для коректной работы необходимо вызывать например @include for-size ($laptop) {стили}
+
+@mixin breakpoint($media) {
+
+    @if $media == $mobileM {
+
+        @media #{$mobileMPoint} { @content; }
+
+    } @else if $media == $mobile {
+
+        @media #{$mobilePoint} { @content; }
+
+    } @else if $media == $tabletM {
+
+        @media #{$tabletMPoint} { @content; }
+
+    } @else if $media == $tablet {
+
+        @media #{$tabletPoint} { @content; }
+
+    } @else if $media == $laptop {
+
+        @media #{$laptopPoint} { @content; }
+
+    }
+}
+
+
+// EXAMPLE
+// textarea {
+//  @include placeholder {
+//    color: #999;
+//  }
+// }
+@mixin placeholder {
+
+    &.placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+}
+
+
+@function calculateRem($size) {
+  $remSize: $size / $basis-font-size;
+  @return #{$remSize}rem;
+}
+
+// Foundation for Sites by ZURB
+// foundation.zurb.com
+
+// Creates a menu icon with a set width, height, number of bars, and colors. The mixin uses the height of the icon and the weight of the bars to determine spacing. <div class="docs-example-burger"></div>
+
+// @param {Color} $color [#fff] - Color to use for the icon.
+// @param {Color} $color-hover [#fff] - Color to use when the icon is hovered over.
+// @param {Number} $width [20px] - Width of the icon.
+// @param {Number} $height [16px] - Height of the icon.
+// @param {Number} $weight [2px] - Height of individual bars in the icon.
+// @param {Number} $bars [3] - Number of bars in the icon.
+// @mixin burger(
+//   $color: #fff,
+//   $color-hover: #fff,
+//   $width: 20px,
+//   $height: 16px,
+//   $weight: 2px,
+//   $bars: 3
+// ) {
+//   // box-shadow CSS output
+//   $shadow: ();
+//   $hover-shadow: ();
+//   // Spacing between bars is calculated based on the total height of the icon and the weight of each bar
+//   $spacing: ($height - ($weight * $bars)) / ($bars - 1);
+//   @if unit($spacing)=='px' {
+//     $spacing: floor($spacing);
+//   }
+//   // Icon container
+//   position: relative;
+//   display: inline-block;
+//   vertical-align: middle;
+//   cursor: pointer;
+//   width: $width;
+//   height: $height;
+//   // Icon bars
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     display: block;
+//     width: 100%;
+//     height: $weight;
+//     background: $color;
+//     top: 0;
+//     left: 0;
+//     @for $i from 2 through $bars {
+//       $offset: ($weight + $spacing) * ($i - 1);
+//       $shadow: append($shadow, 0 $offset 0 $color, comma);
+//     }
+//     box-shadow: $shadow;
+//   }
+//   // Hover state
+//   @if $color-hover {
+//     // Generate CSS
+//     @for $i from 2 through $bars {
+//       $offset: ($weight + $spacing) * ($i - 1);
+//       $hover-shadow: append($hover-shadow, 0 $offset 0 $color-hover, comma);
+//     }
+//     &:hover::after {
+//       background: $color-hover;
+//       box-shadow: $hover-shadow;
+//     }
+//   }
+// }
+//
+// @mixin times(
+//   $color: #fff,
+//   $color-hover: false,
+//   $width: 20px,
+//   $height: $width,
+//   $weight: 2px
+// ) {
+//   position: relative;
+//   display: inline-block;
+//   vertical-align: middle;
+//   width: $width;
+//   height: $height;
+//
+//   $offset: $weight / 2;
+//
+//   @if unit($offset) == 'px' {
+//     $offset: floor($offset);
+//   }
+//
+//   &:before,
+//   &:after {
+//     content: '';
+//     display: block;
+//     position: absolute;
+//     left: 50%;
+//     top: 0;
+//     width: $weight;
+//     height: 100%;
+//     margin-left: -$offset;
+//     background: $color;
+//   }
+//
+//   &:before {
+//     transform: rotate(45deg);
+//   }
+//
+//   &:after {
+//     transform: rotate(-45deg);
+//   }
+//
+//   @if $color-hover {
+//     &:hover,
+//     &:focus {
+//       &:before,
+//       &:after {
+//         background: $color-hover;
+//       }
+//     }
+//   }
+// }
+//
+// @mixin triangle(
+//   $direction: bottom,
+//   $color: #000,
+//   $width: 10px,
+//   $height: $width
+// ) {
+//   $border-width: ();
+//   $border-color: ();
+//
+//   @each $side in top, right, bottom, left {
+//     $w: 0;
+//     $c: transparent;
+//
+//     @if $side == top {
+//       @if $direction == right or $direction == left {
+//         $w: floor($height / 2);
+//       }
+//
+//       @if $direction == bottom or $direction == left-bottom or $direction == left-top {
+//         $w: $height;
+//       }
+//
+//       @if $direction == bottom or $direction == left-top {
+//         $c: $color;
+//       }
+//     }
+//
+//     @if $side == right {
+//       @if $direction == top or $direction == bottom {
+//         $w: floor($width / 2);
+//       }
+//
+//       @if $direction == right-top or $direction == left or $direction == left-top {
+//         $w: $width;
+//       }
+//
+//       @if $direction == right-top or $direction == left {
+//         $c: $color;
+//       }
+//     }
+//
+//     @if $side == bottom {
+//       @if $direction == top or $direction == right-top or $direction == right-bottom {
+//         $w: $height;
+//       }
+//
+//       @if $direction == right or $direction == left {
+//         $w: floor($height / 2);
+//       }
+//
+//       @if $direction == top or $direction == right-bottom {
+//         $c: $color;
+//       }
+//     }
+//
+//     @if $side == left {
+//       @if $direction == top or $direction == bottom {
+//         $w: floor($width / 2);
+//       }
+//
+//       @if $direction == right or $direction == right-bottom or $direction == left-bottom {
+//         $w: $width;
+//       }
+//
+//       @if $direction == right or $direction == left-bottom {
+//         $c: $color;
+//       }
+//     }
+//
+//     $border-width: append($border-width, $w);
+//     $border-color: append($border-color, $c);
+//   }
+//
+//   width: 0;
+//   height: 0;
+//   border-style: solid;
+//   border-width: $border-width;
+//   border-color: $border-color;
+// }

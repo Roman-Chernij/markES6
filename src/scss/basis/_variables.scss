@@ -1,0 +1,36 @@
+$mobileM: 480;
+$mobile:  767;
+$tabletM: 992;
+$tablet:  1023;
+$laptop:  1440;
+
+$widthvalue:'max-width';
+
+$mobileMPoint: (#{$widthvalue} : #{$mobileM}px);
+$mobilePoint:  (#{$widthvalue} : #{$mobile}px);
+$tabletMPoint: (#{$widthvalue} : #{$tabletM}px);
+$tabletPoint:  (#{$widthvalue} : #{$tablet}px);
+$laptopPoint:  (#{$widthvalue} : #{$laptop}px);
+
+
+$urlFont:'../fonts';
+$urlImage:'../images/';
+
+
+
+
+
+$basis-font-size:16;
+$basis-color: #000;
+$basis-line-height: 1.375;
+$basis-min-width-window: 320;
+$basis-font-family:  'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
+
+
+
+$transitionTime: .3;
+
+
+
+$font1:'Arabella_Swash';
+$font1Dir:'Arabella';
